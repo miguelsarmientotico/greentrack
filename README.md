@@ -1,8 +1,6 @@
-# GreenTrack API & Client
+# GreenTrack API & Client - Dockerizado
 
 Este proyecto es una aplicación web completa. A continuación se detallan los pasos necesarios para configurar, ejecutar y probar el entorno de desarrollo local.
-
-> **Nota:** Este proyecto **no** está dockerizado. Se requiere la instalación manual de las herramientas y la base de datos. 😓
 
 ---
 
@@ -33,48 +31,31 @@ Asegúrate de tener instalado lo siguiente en tu máquina antes de comenzar:
 
 Sigue estos pasos en orden para levantar el proyecto exitosamente.
 
-### 1. Configuración de Base de Datos
-El proyecto requiere una base de datos MySQL local.
+### 1. Construye tu proyecto de backend
+El proyecto requiere que construyas previamente el proyecto java.
 
-1.  Crea una base de datos vacía en tu motor MySQL (revisa el archivo `application.properties` para ver el nombre esperado de la DB, o configúralo allí).
-2.  Localiza la carpeta `/sql` en la raíz del proyecto.
-3.  Ejecuta los scripts SQL proporcionados en esa carpeta para generar las tablas e insertar la data inicial.
-
-### 2. Backend (Spring Boot - Gradle)
-El servidor se ejecutará por defecto en el puerto **8080**.
-
-1.  Navega a la carpeta del backend.
-2.  Asegúrate de que las credenciales de tu base de datos local coincidan con las del archivo `src/main/resources/application.properties` (o `application.yml`).
-3.  Ejecuta el proyecto usando el *Gradle Wrapper*:
+1.  Localiza la carpeta `/greentrack-web` en la raiz del proyecto e ingresa.
+3.  Ejecuta el siguiente comando.
 
 ```bash
-# En Linux / macOS / Git Bash
-./gradlew bootRun
-
-# En Windows (CMD / PowerShell)
-gradlew.bat bootRun
+./gradlew clean build --refresh-dependencies
 ```
 
-### 3. Frontend (Angular)
+### 2. Construye el proyecto completo
+El proyecto esta dockerizado por lo que puedes ejecutarlo con el uso de docker.
 
-El cliente se ejecutará por defecto en el puerto 4200.
-
-- Navega a la carpeta del frontend.  
-
-Instala las dependencias:
-
-```Bash
-npm install
+```bash
+# Uso de docker compose
+docker compose up -d --build
 ```
 
-Inicia el servidor de desarrollo:
+### 3. Rutas
 
-```Bash
-    npm start
-    ng serve
-```
+frontend http://localhost:80.  
+[Frontend](http://localhost:80)
 
-Abre tu navegador en http://localhost:4200.  
+backend http://localhost:8080.  
+[Backend](http://localhost:8080)
 
 ## 🔑 Credenciales de Acceso
 
@@ -90,9 +71,3 @@ Para probar los endpoints del Backend directamente sin pasar por el Frontend, pu
 
 [Ver Colección de GreenTrack en Postman](https://www.postman.com/posgrado-4464/greentrack-api/collection/12739785-3a3de44a-a562-4cd9-9ce4-9259ed8d667e/?action=share&creator=12739785)
 
-## ⚠️ Solución de Problemas Comunes
-
-- Error de conexión a BD: Verifica que el servicio de MySQL esté activo y que el puerto 3306 esté disponible. Revisa usuario y contraseña en el archivo de propiedades de Spring Boot.
-- Permisos de ejecución (Linux/Mac): Si ./gradlew da error de permiso denegado, ejecuta: chmod +x gradlew.
-- Puertos ocupados: Asegúrate de que los puertos 8080 y 4200 no estén siendo usados por otros procesos.
-- Versión de Node: Si tienes errores al instalar paquetes de Angular, verifica que estés usando Node 22 (node -v).

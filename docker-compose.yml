@@ -1,0 +1,41 @@
+networks:
+  greentrack:
+    driver: bridge
+volumes:
+  mysql:
+    driver: local
+services:
+  web:
+    build: ./greentrack-web
+    ports:
+      - '80:80'
+    container_name: greentrack-web
+    networks:
+      - greentrack
+  greentrack-api:
+    build: ./greentrack-api
+    ports:
+      - '8080:8080'
+    container_name: greentrack-api
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - greentrack
+    restart: on-failure
+    depends_on:
+      - mysql
+  mysql:
+    image: 'mysql:8.2.0'
+    container_name: greentrack-db
+    environment:
+      - MYSQL_DATABASE=greentrack-db
+      - MYSQL_ROOT_PASSWORD=admin
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=admin
+    volumes:
+      - ./data/mysql/data:/var/lib/mysql
+      - ./data/mysql/config:/etc/mysql/conf.d
+      - ./data/mysql/backup:/backup
+      - ./data/mysql/initdb:/docker-entrypoint-initdb.d
+    networks:
+      - greentrack
