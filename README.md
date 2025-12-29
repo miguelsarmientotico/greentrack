@@ -34,7 +34,7 @@ Sigue estos pasos en orden para levantar el proyecto exitosamente.
 ### 1. Construye tu proyecto de backend
 El proyecto requiere que construyas previamente el proyecto java.
 
-1.  Localiza la carpeta `/greentrack-web` en la raiz del proyecto e ingresa.
+1.  Localiza la carpeta `/greentrack-api` en la raiz del proyecto e ingresa.
 3.  Ejecuta el siguiente comando.
 
 ```bash
